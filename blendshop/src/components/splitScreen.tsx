@@ -61,13 +61,20 @@ export default function SplitScreen() {
         </Stack>
       </Flex>
       <Flex flex={1}>
-        <Image
+       { isSignIn ? <Image
           alt={'Login Image'}
           objectFit={'cover'}
           src={
-            '/orange-splash.jpg'
+            '/happyprof.jpg'
           }
-        />
+        /> :         
+        <Image
+        alt={'Login Image'}
+        objectFit={'cover'}
+        src={
+          '/happywoman.png'
+        }
+      />}
       </Flex>
     </Stack>
   );

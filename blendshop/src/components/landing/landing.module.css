@@ -1,0 +1,72 @@
+.mainContainer{
+    background: url("/bgjumper.jpg");
+
+    background-position: 6rem;
+    background-size: cover;
+}
+
+.navBar{
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.heroContainer{
+   height: 91.1vh;
+
+}
+.heroRight{
+   position: relative;
+}
+.heroLeft{
+    display:grid;
+    place-items: center;
+
+}
+.glass{
+    height:70%;
+    width:85%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.windowOne{
+    position: absolute;
+    height:30rem;
+    width:14rem;
+    top:2rem;
+    left:3rem;
+    border-radius: 9rem;
+    background: url('/happyman.png') ;
+    background-position: center;
+    background-size: 20rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+
+}
+
+.windowTwo{
+    position: absolute;
+    height:30rem;
+    width:14rem;
+    bottom:2rem;
+    right:3rem;
+    border-radius: 9rem;
+    background: url('/happygirl.png');
+    background-position: center;
+    background-size: 17rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.overlay{
+    width:100%;
+    height:100%;
+    background-color: rgba(0, 0, 0, 0.15);
+}

@@ -4,7 +4,8 @@ import '../styles/global.css'
 const theme = extendTheme({
   colors: {
     brand: {
-      100: "#F88C03",
+      100: "#3B82F6",
+      200: "#1D4ED8"
     },
   },
 })

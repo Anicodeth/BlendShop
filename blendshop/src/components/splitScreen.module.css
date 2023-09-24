@@ -1,0 +1,41 @@
+.imageContainer{
+    height:100vh;
+    width: 100%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: absolute;
+    z-index:-1;
+}
+.backContainer{
+    position: relative;
+    height:100vh;
+    width:100%;
+    z-index: 1;
+}
+.splashOne{
+    position:absolute;
+    height:30rem;
+    width:30rem;
+    top:0;
+    background-color:#3B82F6;
+    z-index:-2;
+    border-radius: 100rem;
+
+}
+
+.splashTwo{
+    position:absolute;
+    height:30rem;
+    width:30rem;
+    bottom:0;
+    right:0;
+    background-color:#2AB174;
+    z-index:-2;
+    border-radius: 100rem;
+
+}

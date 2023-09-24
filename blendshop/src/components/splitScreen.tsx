@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
+import style from './splitScreen.module.css'
+
 
 export default function SplitScreen() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -54,27 +56,30 @@ export default function SplitScreen() {
             </Stack>
             <Button bg={'brand.100'} 
             color = {'white'}
-            variant={'solid'}>
+            variant={'solid'}
+            _hover={{ bg: 'brand.200' } }
+            >
               {isSignIn ? 'Sign in' : 'Sign up'}
             </Button>
           </Stack>
         </Stack>
       </Flex>
       <Flex flex={1}>
-       { isSignIn ? <Image
-          alt={'Login Image'}
-          objectFit={'cover'}
-          src={
-            '/happyprof.jpg'
-          }
-        /> :         
-        <Image
-        alt={'Login Image'}
-        objectFit={'cover'}
-        src={
-          '/happywoman.png'
-        }
-      />}
+        <div className = {style.backContainer}>
+          <div className = {style.splashOne}></div>
+          <div className = {style.splashTwo}></div>
+        <div className = {style.imageContainer}>
+
+
+            <Image
+              alt={'Login Image'}
+              objectFit={'cover'}
+              src={
+                '/happywoman.png'
+              }
+            />
+      </div>
+      </div>
       </Flex>
     </Stack>
   );

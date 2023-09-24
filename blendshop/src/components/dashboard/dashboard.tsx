@@ -2,24 +2,25 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import style from './dashboard.module.css'
 
 const Dashboard = ({ children }:any) => {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className={`flex min-h-screen  ${style.sidebarContainer}`}>
       {/* Sidebar */}
-      <aside className="w-1/5 p-4 bg-blue-500 text-white">
-        <nav>
-          <ul>
-            <li className="mb-4">
+      <aside className={`w-60 p-4`}></aside>
+      <aside className={`w-60 p-4 ${style.sidebar}`}>
+        <h4>BlendShop</h4>
+          <ul className={`mb-4 ${style.sidebarItems}`}>
+            <li className={`mb-4 ${style.sidebarItem}`}>
               <Link href="/buy">Buy</Link>
             </li>
-            <li>
+            <li className={`mb-4 ${style.sidebarItem}`} >
               <Link href="/sell">Sell</Link>
             </li>
           </ul>
-        </nav>
       </aside>
 
       {/* Main Content */}

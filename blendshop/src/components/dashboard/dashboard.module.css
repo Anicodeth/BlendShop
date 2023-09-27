@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Roboto+Slab&display=swap');
 .sidebar{
     position: fixed;
     display: flex;
@@ -6,16 +8,38 @@
     top: 0;
     left:0;
     background-color: white;
-    border-radius:  0 1rem 1rem 0 ;
-    border: 1px solid lightgray;
     height: 100%;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+
+}
+
+.sidebarHeader{
+    font-family: 'Oswald', sans-serif;
+font-size:2.5rem;
 }
 
 .sidebarItems{
-    width: 80%;
+    width: 90%;
+    margin-top: 2rem;
 }
 
 .sidebarItem{
+    font-family: 'Roboto Slab', serif;
+    font-size: 1rem;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    justify-content: space-between;
+    padding-right: 7.5rem;
+transition: 1s ease-in-out;
 
+
+}
+
+.highlight{
+    background-color: #A9C8FE;
+    border-radius: 0 1rem 1rem 0;
+    
+    
 }

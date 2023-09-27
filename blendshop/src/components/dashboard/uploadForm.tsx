@@ -11,7 +11,7 @@ const UploadForm: React.FC = () => {
   const [modelFile, setModelFile] = useState<File | null>(null);
   const [modelPrice, setModelPrice] = useState<number | null>(null);
   const { currentUser } = useAuth();
-
+  const [modelTitle, setModelTitle] = useState<string>('');
  
   const storage = getStorage(firebaseApp);
 
@@ -48,6 +48,7 @@ const UploadForm: React.FC = () => {
     const modelData = {
 
       imageUrl,
+      title: modelTitle,
       description: modelDescription,
       fileUrl,
       price: modelPrice,
@@ -95,30 +96,77 @@ const UploadForm: React.FC = () => {
     setModelDescription('');
     setModelFile(null);
     setModelPrice(null);
+    setModelTitle('');
 
     alert('Model uploaded successfully!');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="modelImage">Model Image:</label>
-        <input type="file" id="modelImage" accept="image/*" onChange={handleImageChange} />
-      </div>
-      <div>
-        <label htmlFor="modelDescription">Description:</label>
-        <input type="text" id="modelDescription" value={modelDescription} onChange={(e) => setModelDescription(e.target.value)} />
-      </div>
-      <div>
-        <label htmlFor="modelFile">3D Model File:</label>
-        <input type="file" id="modelFile" accept=".obj,.stl,.gltf" onChange={handleFileChange} />
-      </div>
-      <div>
-        <label htmlFor="modelPrice">Price:</label>
-        <input type="number" id="modelPrice" value={modelPrice || ''} onChange={(e) => setModelPrice(Number(e.target.value))} />
-      </div>
-      <button type="submit">Upload Model</button>
-    </form>
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+    <div className="mb-4">
+      <label htmlFor="modelImage" className="form-label">
+        Model Image:
+      </label><br/>
+      <input
+        type="file"
+        id="modelImage"
+        accept="image/*"
+        onChange={handleImageChange}
+        className="form-input"
+      />
+    </div>
+    <div className="mb-4">
+      <label htmlFor="modelTitle" className="form-label">
+        Title:
+      </label><br/>
+      <input
+        type="text"
+        id="modelTitle"
+        value={modelTitle}
+        onChange={(e) => setModelTitle(e.target.value)}
+        className="form-input"
+      />
+    </div>
+    <div className="mb-4">
+      <label htmlFor="modelDescription" className="form-label">
+        Description:
+      </label><br/>
+      <input
+        type="text"
+        id="modelDescription"
+        value={modelDescription}
+        onChange={(e) => setModelDescription(e.target.value)}
+        className="form-input"
+      />
+    </div>
+    <div className="mb-4">
+      <label htmlFor="modelFile" className="form-label">
+        3D Model File:
+      </label><br/>
+      <input
+        type="file"
+        id="modelFile"
+        accept=".obj,.stl,.gltf"
+        onChange={handleFileChange}
+        className="form-input"
+      />
+    </div>
+    <div className="mb-4">
+      <label htmlFor="modelPrice" className="form-label">
+        Price:
+      </label><br/>
+      <input
+        type="number"
+        id="modelPrice"
+        value={modelPrice || ''}
+        onChange={(e) => setModelPrice(Number(e.target.value))}
+        className="form-input"
+      />
+    </div>
+    <button type="submit" className="form-button">
+      Upload Model
+    </button>
+  </form>
   );
 };
 

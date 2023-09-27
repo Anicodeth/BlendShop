@@ -18,8 +18,9 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { useAuth } from '../auth/authContext';
-
+import { useRouter } from 'next/router';
 export default function SplitScreen() {
+  const router = useRouter();
   const [isSignIn, setIsSignIn] = useState(true);
   const { currentUser } = useAuth();
   const toggleForm = () => {
@@ -35,10 +36,7 @@ export default function SplitScreen() {
       const password = document.getElementById('password').value;
 
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      console.log('User signed in:', user);
-
+      router.push('/dashboard');
 
     } catch (error:any) {
       console.error('Error signing in:', error.message);
@@ -61,7 +59,7 @@ export default function SplitScreen() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      console.log('User signed up:', user);
+      alert('User signed up:');
 
       if(user){
         const userRef = ref(db, 'users/' + user.uid);

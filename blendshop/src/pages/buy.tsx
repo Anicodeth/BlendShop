@@ -27,9 +27,10 @@ const BuyPage: React.FC = () => {
            const childData = childSnapshot.val();
            const price = childData.price;
            const imageUrl = childData.imageUrl;
+           const title = childData.title;
            const fileUrl = childData.fileUrl;
            const description = childData.description;
-          temp.push({productId: id, title: description, price: price, imageUrl: imageUrl})
+          temp.push({productId: id, title:title, description: description, price: price, imageUrl: imageUrl})
 
          });
 
@@ -58,8 +59,6 @@ const BuyPage: React.FC = () => {
                 price={card.price}
                 imageUrl={card.imageUrl}
               >
-                {/* Content specific to the card */}
-                <p>Description for {card.title}</p>
               </CardComponent>
           </Link>
         ))}

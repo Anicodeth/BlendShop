@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { getStorage, ref, uploadBytesResumable } from '@firebase/storage';
-import { getDatabase, set} from '@firebase/database';
+import { getStorage, ref , uploadBytesResumable, getDownloadURL } from '@firebase/storage';
+import { getDatabase, ref as refdb, set, push, get, setUser} from '@firebase/database';
+import firebaseApp from '../../auth/firebase'; // Import your Firebase configuration here
+import { useAuth } from '../../auth/authContext';
+
 
 const UploadForm: React.FC = () => {
   const [modelImage, setModelImage] = useState<File | null>(null);
   const [modelDescription, setModelDescription] = useState<string>('');
   const [modelFile, setModelFile] = useState<File | null>(null);
   const [modelPrice, setModelPrice] = useState<number | null>(null);
+  const { currentUser } = useAuth();
 
-  const storage = getStorage();
+ 
+  const storage = getStorage(firebaseApp);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -26,7 +31,7 @@ const UploadForm: React.FC = () => {
     e.preventDefault();
 
     // Upload image and model file to Firebase Storage
-    const imageRef = ref(storage, 'modelImages/' + modelImage?.name);
+    const imageRef = await ref(storage, 'modelImages/' + modelImage?.name);
     const imageUploadTask = uploadBytesResumable(imageRef, modelImage);
 
     const fileRef = ref(storage, 'modelFiles/' + modelFile?.name);
@@ -41,24 +46,50 @@ const UploadForm: React.FC = () => {
 
     // Create a model object with the collected data
     const modelData = {
+
       imageUrl,
       description: modelDescription,
       fileUrl,
       price: modelPrice,
     };
-
-    const db = getDatabase();
-    const modelRef = ref(db, 'models/');
-
-
+    const user = currentUser;
+    
+    const db = getDatabase(firebaseApp);
+    const modelRef = refdb(db, 'models/');
   
-    set(modelRef, modelData)
-      .then(() => {
-        console.log('Model data saved to Realtime Database');
-      })
-      .catch((error:any) => {
-        console.error('Error saving model data:', error);
-      });
+    const newModelRef = push(modelRef, modelData)
+    const modelId = newModelRef.key;
+
+    if (user) {
+      const userRef = refdb(db, 'users/' + user.uid  );
+
+
+      get(userRef)
+        .then((snapshot:any) => {
+          if (snapshot.exists()) {
+            // User data found, set it to the state
+            const userData = snapshot.val();
+            const uploadedModels = userData.uploadedModels || [];
+            uploadedModels.push(modelId);
+            set(userRef, { ...userData, uploadedModels })
+              .then(() => {
+                console.log('User Update saved to Realtime Database');  
+              })
+              .catch((error:any) => {
+                console.error('Error saving user data to Realtime Database:', error.message);
+              });
+   
+          } else {
+            // User data not found
+            console.log('User data not found');
+          }
+        })
+        .catch((error:any) => {
+          console.error('Error retrieving user data:', error.message);
+        });
+
+    }
+
     // Clear form fields or show a success message
     setModelImage(null);
     setModelDescription('');
@@ -92,7 +123,5 @@ const UploadForm: React.FC = () => {
 };
 
 export default UploadForm;
-function getDownloadURL(imageRef: any) {
-    throw new Error('Function not implemented.');
-}
+
 

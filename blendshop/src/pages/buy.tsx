@@ -2,30 +2,47 @@
 import Link from 'next/link';
 import Dashboard from '@/components/dashboard/dashboard';
 import CardComponent from '@/components/card';
+import {getDatabase, ref, get, set, push} from "@firebase/database";
+import firebaseApp  from "../auth/firebase";
+import { useEffect, useState } from 'react';
 
-// Dummy data for cards
-const cardData = [
-  {
-    title: 'Product 1',
-    price: '$19.99',
-    imageUrl: 'https://example.com/product1.jpg',
-    productId: '1', // Add a productId property
-  },
-  {
-    title: 'Product 2',
-    price: '$24.99',
-    imageUrl: 'https://example.com/product2.jpg',
-    productId: '2', // Add a productId property
-  },
-  {
-    title: 'Product 3',
-    price: '$29.99',
-    imageUrl: 'https://example.com/product3.jpg',
-    productId: '3', // Add a productId property
-  },
-];
+
+
 
 const BuyPage: React.FC = () => {
+  
+  const db = getDatabase(firebaseApp);
+
+  const modelRef = ref(db, 'models/');
+  const [cardData, setCardData] = useState([]);
+  var temp:any = []
+  useEffect(() => {
+    get(modelRef).
+    then((snapshot:any) => {
+      if (snapshot.exists()) {
+        
+         snapshot.forEach((childSnapshot:any) => {
+           
+           const id = childSnapshot.key;
+           const childData = childSnapshot.val();
+           const price = childData.price;
+           const imageUrl = childData.imageUrl;
+           const fileUrl = childData.fileUrl;
+           const description = childData.description;
+          temp.push({productId: id, title: description, price: price, imageUrl: imageUrl})
+
+         });
+
+   
+       } else {
+         console.log("No data available"); 
+       }
+       setCardData(temp);
+      })
+   ;
+  
+  }, [])
+  
   return (
     <Dashboard>
       <div className="bg-white p-4 rounded shadow-md">

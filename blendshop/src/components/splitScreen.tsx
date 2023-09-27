@@ -17,10 +17,11 @@ import {
   Image,
   Link,
 } from '@chakra-ui/react';
+import { useAuth } from '../auth/authContext';
 
 export default function SplitScreen() {
   const [isSignIn, setIsSignIn] = useState(true);
-
+  const { currentUser } = useAuth();
   const toggleForm = () => {
     setIsSignIn(!isSignIn);
   };
@@ -67,6 +68,9 @@ export default function SplitScreen() {
 
         const userData = {
           email: user.email,
+          uploadedModels: [],
+          purchasedModels: [],
+
         };
       
         set(userRef, userData)

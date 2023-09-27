@@ -1,9 +1,18 @@
-.mainContainer{
+@keyframes jump {
+    0%, 100% {
+      background-position: 3rem;
+    }
+    50% {
+      background-position: 3rem 5px; /* Adjust the jump height as needed */
+    }
+  }
+  
+  .mainContainer {
     background: url("/bgjumper.jpg");
-
-    background-position: 6rem;
     background-size: cover;
-}
+    animation: jump 5s infinite; /* Adjust the animation duration as needed */
+  }
+  
 
 .navBar{
     background: rgba(255, 255, 255, 0.2);

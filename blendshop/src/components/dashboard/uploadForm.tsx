@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getStorage, ref , uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { getDatabase, ref as refdb, set, push, get, setUser} from '@firebase/database';
+import { getDatabase, ref as refdb, set, push, get} from '@firebase/database';
 import firebaseApp from '../../auth/firebase'; // Import your Firebase configuration here
 import { useAuth } from '../../auth/authContext';
 

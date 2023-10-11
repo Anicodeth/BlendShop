@@ -31,6 +31,10 @@ const UploadForm: React.FC = () => {
     e.preventDefault();
 
     // Upload image and model file to Firebase Storage
+    if (!modelImage || !modelFile) {
+      alert('Please select an image and a model file!');
+      return;
+    }
     const imageRef = await ref(storage, 'modelImages/' + modelImage?.name);
     const imageUploadTask = uploadBytesResumable(imageRef, modelImage);
 

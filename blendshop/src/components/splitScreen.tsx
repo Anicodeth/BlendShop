@@ -19,10 +19,12 @@ import {
 } from '@chakra-ui/react';
 import { useAuth } from '../auth/authContext';
 import { useRouter } from 'next/router';
+
 export default function SplitScreen() {
   const router = useRouter();
   const [isSignIn, setIsSignIn] = useState(true);
   const { currentUser } = useAuth();
+
   const toggleForm = () => {
     setIsSignIn(!isSignIn);
   };
@@ -30,14 +32,26 @@ export default function SplitScreen() {
   const auth = getAuth(firebaseApp);
   const db = getDatabase(firebaseApp);
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleEmailChange = (event:any) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event:any) => {
+    setPassword(event.target.value);
+  };
+
+  const handleConfirmPasswordChange = (event:any) => {
+    setConfirmPassword(event.target.value);
+  };
+
   const handleSignIn = async () => {
     try {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
-
     } catch (error:any) {
       console.error('Error signing in:', error.message);
     }
@@ -45,32 +59,25 @@ export default function SplitScreen() {
 
   const handleSignUp = async () => {
     try {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-
       if (password !== confirmPassword) {
         console.error('Passwords do not match');
         return;
       }
-
-      console.log(email, password, confirmPassword)
 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       alert('User signed up:');
 
-      if(user){
+      if (user) {
         const userRef = ref(db, 'users/' + user.uid);
 
         const userData = {
           email: user.email,
           uploadedModels: [],
           purchasedModels: [],
-
         };
-      
+
         set(userRef, userData)
           .then(() => {
             console.log('User data saved to Realtime Database');
@@ -92,45 +99,45 @@ export default function SplitScreen() {
             {isSignIn ? 'Sign in to your account' : 'Sign up for a new account'}
           </Heading>
           <form>
-          <FormControl id="email">
-            <FormLabel>Email address</FormLabel>
-            <Input type="email" />
-          </FormControl>
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input type="password" />
-          </FormControl>
-          {!isSignIn && (
-            <FormControl id="confirmPassword">
-              <FormLabel>Confirm Password</FormLabel>
-              <Input type="password" />
+            <FormControl>
+              <FormLabel>Email address</FormLabel>
+              <Input type="email" value={email} onChange={handleEmailChange} />
             </FormControl>
-          )}
-          
-          <Stack spacing={6}>
-            <Stack
-              direction={{ base: 'column', sm: 'row' }}
-              align={'start'}
-              justify={'space-between'}>
-              <Checkbox>Remember me</Checkbox>
-              <Link color={'blue.500'} onClick={toggleForm}>
-                {isSignIn ? 'Sign up instead' : 'Sign in instead'}
-              </Link>
+            <FormControl>
+              <FormLabel>Password</FormLabel>
+              <Input type="password" value={password} onChange={handlePasswordChange} />
+            </FormControl>
+            {!isSignIn && (
+              <FormControl>
+                <FormLabel>Confirm Password</FormLabel>
+                <Input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+              </FormControl>
+            )}
+
+            <Stack spacing={6}>
+              <Stack
+                direction={{ base: 'column', sm: 'row' }}
+                align={'start'}
+                justify={'space-between'}>
+                <Checkbox>Remember me</Checkbox>
+                <Link color={'blue.500'} onClick={toggleForm}>
+                  {isSignIn ? 'Sign up instead' : 'Sign in instead'}
+                </Link>
+              </Stack>
+              <Button
+                bg={'brand.100'}
+                color={'white'}
+                variant={'solid'}
+                _hover={{ bg: 'brand.200' }}
+                onClick={isSignIn ? handleSignIn : handleSignUp}
+              >
+                {isSignIn ? 'Sign in' : 'Sign up'}
+              </Button>
             </Stack>
-            <Button
-              bg={'brand.100'}
-              color={'white'}
-              variant={'solid'}
-              _hover={{ bg: 'brand.200' }}
-              onClick={isSignIn ? handleSignIn : handleSignUp}
-            >
-              {isSignIn ? 'Sign in' : 'Sign up'}
-            </Button>
-          </Stack>
           </form>
         </Stack>
       </Flex>
-      
+
       <Flex flex={1}>
         <div className={style.backContainer}>
           <div className={style.splashOne}></div>

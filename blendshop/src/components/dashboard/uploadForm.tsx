@@ -96,9 +96,9 @@ const UploadForm: React.FC = () => {
     }
 
     // Clear form fields or show a success message
-    setModelImage(null);
+    setModelImage(new File([], ''));
     setModelDescription('');
-    setModelFile(null);
+    setModelFile(new File([], ''));
     setModelPrice(null);
     setModelTitle('');
 

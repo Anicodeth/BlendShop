@@ -5,12 +5,13 @@ import CardComponent from '@/components/card';
 import {getDatabase, ref, get, set, push} from "@firebase/database";
 import firebaseApp  from "../auth/firebase";
 import { useEffect, useState } from 'react';
-
+import { useAuth } from '../auth/authContext';
 
 
 
 const BuyPage: React.FC = () => {
   
+  const { currentUser } = useAuth();
   const db = getDatabase(firebaseApp);
 
   const modelRef = ref(db, 'models/');
@@ -22,6 +23,7 @@ const BuyPage: React.FC = () => {
       if (snapshot.exists()) {
         
          snapshot.forEach((childSnapshot:any) => {
+          console.log(childSnapshot.val())
            
            const id = childSnapshot.key;
            const childData = childSnapshot.val();
@@ -58,6 +60,8 @@ const BuyPage: React.FC = () => {
                 title={card.title}
                 price={card.price}
                 imageUrl={card.imageUrl}
+                productId={card.productId}
+                currentUser={currentUser.uid}
               >
               </CardComponent>
           

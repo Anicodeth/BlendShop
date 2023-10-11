@@ -1,21 +1,22 @@
 // components/CardComponent.tsx
 import React, { useState } from 'react';
 
-
 interface CardProps {
   title: string;
   price: string;
   imageUrl: string;
   children: React.ReactNode;
+  productId: string;
+  currentUser: string;
 }
 
-const CardComponent: React.FC<CardProps> = ({ title, price, imageUrl, children }) => {
+const CardComponent: React.FC<CardProps> = ({ title, price, imageUrl, children, productId, currentUser }) => {
   const [paymentResult, setPaymentResult] = useState<string | null>(null);
 
-
+  
   const handlePayment = async () => {
     const randomid = Math.floor(Math.random() * 1000000000);
-    
+    console.log(`http://localhost:3000/payment?currentUser=${currentUser}&price=${price}&productId=${productId}`);
     try {
       const response = await fetch('/api/chapa', {
         method: 'POST',
@@ -27,17 +28,19 @@ const CardComponent: React.FC<CardProps> = ({ title, price, imageUrl, children }
           email: 'abebech_bekele@gmail.com', // Add the email here or get it from the user
           phone_number: '0912345678', // Add the phone number here or get it from the user
           tx_ref: `${randomid}`, // You can generate a unique reference for each payment
-          callback_url: `https://webhook.site/${randomid}`, // Your callback URL
+          callback_url: `http://localhost:3000/${currentUser}/${price}/${productId}`, // Your callback URL
         }),
       });
 
       if (response.ok) {
         const main = await response.json();
-
+ 
+        console.log(main.result);
         // redirect to the payment page
         const url = JSON.parse(main.result).data.checkout_url;
        
         window.location.replace(url);
+
 
 
     

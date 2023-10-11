@@ -6,9 +6,9 @@ import { useAuth } from '../../auth/authContext';
 
 
 const UploadForm: React.FC = () => {
-  const [modelImage, setModelImage] = useState<File>();
+  const [modelImage, setModelImage] = useState<File>(new File([], ''));
   const [modelDescription, setModelDescription] = useState<string>('');
-  const [modelFile, setModelFile] = useState<File >();
+  const [modelFile, setModelFile] = useState<File>(new File([], ''));
   const [modelPrice, setModelPrice] = useState<number | null>(null);
   const { currentUser } = useAuth();
   const [modelTitle, setModelTitle] = useState<string>('');

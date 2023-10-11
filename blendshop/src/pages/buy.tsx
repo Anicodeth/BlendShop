@@ -53,14 +53,14 @@ const BuyPage: React.FC = () => {
       {/* Render the CardComponents in a grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {cardData.map((card, index) => (
-          <Link key={index} href={`/product/${card.productId}`}>
+          // <Link key={index} href={`/product/${card.productId}`}>
               <CardComponent
                 title={card.title}
                 price={card.price}
                 imageUrl={card.imageUrl}
               >
               </CardComponent>
-          </Link>
+          
         ))}
       </div>
     </Dashboard>
